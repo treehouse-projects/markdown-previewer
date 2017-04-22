@@ -20,7 +20,8 @@ Select ***all*** of the text here, ***delete it***, and write your OWN Markdown!
 `;
 
 // add event listeners to buttons
-const buttonSetup = function(input,target,starterMD) {
+// add toggle actions
+const buttonSetup = (input,target,starterMD) => {
   const buttons = document.querySelectorAll('.column button');
   for (var button of buttons) {
     button.textContent = button.getAttribute('data-start-text')
@@ -59,18 +60,19 @@ const buttonSetup = function(input,target,starterMD) {
 }
 
 // function for invoking the markdown conversion
-const run = function(source, target) {
+const run = (source, target) => {
   const converter = new showdown.Converter();
   let text = source.value;
   let html = converter.makeHtml(text);
   target.innerHTML = html;
 };
 
+// initialize!!!!
 // set up the button
 // convert initial markdown to HTML
 // setup event listener for any input into
 // the source text area
-const init = function(input,target,starterMD) {
+const init = (input,target,starterMD) => {
   input.textContent = starterMD;
   run(input,target);
   input.focus();
