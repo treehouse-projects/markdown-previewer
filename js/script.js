@@ -15,6 +15,8 @@ There is just **so** *much* you can **do**!
 I can't believe it's THIS easy!!!!
 
 Click this [link for a markdown cheatsheet](https://teamtreehouse.com/markdown)
+
+Select ***all*** of the text here, ***delete it***, and write your OWN Markdown!
 `;
 
 // create and add button for toggling
