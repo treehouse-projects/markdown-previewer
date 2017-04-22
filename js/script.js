@@ -1,12 +1,8 @@
 ( function(converter) {
-  const dom = {
-    sourceID : '#sourceTA',
-    targetID : '#targetDiv'
-  };
   const config = {
     converter: converter,
-    source : document.querySelector(dom.sourceID),
-    target : document.querySelector(dom.targetID),
+    source : document.querySelector('#sourceTA'),
+    target : document.querySelector('#targetDiv'),
     buttons : document.querySelectorAll('.toggle'),
     styleButton : document.querySelector('.toggle.styles'),
     textButton : document.querySelector('.toggle.text'),
