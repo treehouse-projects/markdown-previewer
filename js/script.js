@@ -21,7 +21,7 @@ Select ***all*** of the text here, ***delete it***, and write your OWN Markdown!
 
 // create and add button for toggling
 // GH Markdown stylesheet off and on
-const setupButton = (target) => {
+const setupStyleButton = (target) => {
   let GHStyles = false;
   const targetClass = target.className;
   const starterText = `Display GitHub Markdown Styling`;
@@ -43,6 +43,32 @@ const setupButton = (target) => {
   document.querySelector('body').appendChild(button);
 };
 
+// create and add button for toggling
+// GH Markdown stylesheet off and on
+const setupClearButton = (source, target, MD) => {
+  let clearText = false;
+  const targetClass = target.className;
+  const starterText = `Delete Markdown`;
+  const toggleText = `Revert to original Markdown`;
+  const button = document.createElement("BUTTON");
+  button.textContent = starterText;
+  button.className = 'toggleText';
+  button.addEventListener('click', () => {
+    if (clearText) {
+      source.textContent = MD;
+      clearText = false;
+      button.textContent = starterText;
+    } else {
+      source.textContent = '';
+      clearText = true;
+      button.textContent = toggleText;
+    }
+    source.focus();
+    run(source,target);
+  });
+  document.querySelector('body').appendChild(button);
+};
+
 // function for invoking the markdown conversion
 const run = function(source, target) {
   const converter = new showdown.Converter();
@@ -56,7 +82,8 @@ const run = function(source, target) {
 // setup event listener for any input into
 // the source text area
 const init = function(input,target,starterMD) {
-  setupButton(target);
+  setupStyleButton(target);
+  setupClearButton(input, target, starterMD);
   input.textContent = starterMD;
   run(input,target);
   input.focus();
