@@ -19,55 +19,44 @@ Click this [link for a markdown cheatsheet](https://teamtreehouse.com/markdown)
 Select ***all*** of the text here, ***delete it***, and write your OWN Markdown!
 `;
 
-// create and add button for toggling
-// GH Markdown stylesheet off and on
-const setupStyleButton = (target) => {
-  let GHStyles = false;
-  const targetClass = target.className;
-  const starterText = `Display GitHub Markdown Styling`;
-  const toggleText = `Display normal HTML styling`;
-  const button = document.createElement("BUTTON");
-  button.textContent = starterText;
-  button.className = 'toggleGH';
-  button.addEventListener('click', () => {
-    if (! GHStyles) {
-      target.className += ' markdown-body';
-      GHStyles = true;
-      button.textContent = toggleText;
-    } else {
-      target.className = targetClass;
-      GHStyles = false;
-      button.textContent = starterText;
-    }
-  });
-  document.querySelector('body').appendChild(button);
-};
+// add event listeners to buttons
+const buttonSetup = function(input,target,starterMD) {
+  const buttons = document.querySelectorAll('.column button');
+  for (var button of buttons) {
+    button.textContent = button.getAttribute('data-start-text')
+    button.addEventListener('click', function() {
+      // toggle text
+      if (this.textContent === this.getAttribute('data-start-text')) {
+        this.textContent = this.getAttribute('data-toggle-text');
+      } else {
+        this.textContent = this.getAttribute('data-start-text');
+      }
+    });
+  }
 
-// create and add button for toggling
-// GH Markdown stylesheet off and on
-const setupClearButton = (source, target, MD) => {
-  let clearText = false;
-  const targetClass = target.className;
-  const starterText = `Delete Markdown`;
-  const toggleText = `Revert to original Markdown`;
-  const button = document.createElement("BUTTON");
-  button.textContent = starterText;
-  button.className = 'toggleText';
-  button.addEventListener('click', () => {
-    if (clearText) {
-      source.textContent = MD;
-      clearText = false;
-      button.textContent = starterText;
+  const styleButton = document.querySelector('.target button');
+  styleButton.addEventListener('click', function() {
+    if (target.className === 'markdown-body') {
+      target.className = '';
     } else {
-      source.textContent = '';
-      clearText = true;
-      button.textContent = toggleText;
+      target.className = 'markdown-body';
     }
-    source.focus();
-    run(source,target);
   });
-  document.querySelector('body').appendChild(button);
-};
+
+  const textButton = document.querySelector('.source button');
+  textButton.addEventListener('click', function() {
+    if (this.getAttribute('data-action') === 'clear') {
+      this.setAttribute('data-action', 'reset');
+      input.value = '';
+    } else {
+      this.setAttribute('data-action', 'clear');
+      input.value = starterMD;
+      console.log('here');
+    }
+    run(input,target);
+    input.focus();
+  });
+}
 
 // function for invoking the markdown conversion
 const run = function(source, target) {
@@ -82,11 +71,10 @@ const run = function(source, target) {
 // setup event listener for any input into
 // the source text area
 const init = function(input,target,starterMD) {
-  setupStyleButton(target);
-  setupClearButton(input, target, starterMD);
   input.textContent = starterMD;
   run(input,target);
   input.focus();
+  buttonSetup(input, target, starterMD)
   input.addEventListener('input', () => run(input,target));
 };
 
