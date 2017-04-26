@@ -31,6 +31,7 @@ body {
 #targetDiv {
   border: 1px dashed #333333;
   height: 92vh;
+  overflow:scroll;
   box-sizing: border-box;
   padding: 0 20px 20px;
   background-color: white;
